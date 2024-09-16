@@ -80,4 +80,4 @@ require_once GP_PROJECT_ICON_DIR_PATH . 'vendor/autoload.php';
 function gp_project_icon_init() {
 	new Project_Icon();
 }
-add_action( 'gp_init', __NAMESPACE__ . '\gp_project_icon_init' );
+// add_action( 'gp_init', __NAMESPACE__ . '\gp_project_icon_init' );

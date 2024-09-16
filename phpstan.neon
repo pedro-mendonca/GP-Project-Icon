@@ -1,0 +1,14 @@
+parameters:
+	level: 9
+	inferPrivatePropertyTypeFromConstructor: true
+	checkGenericClassInNonGenericObjectType: false
+	scanFiles:
+		# GlotPress Stubs
+		- %rootDir%/../../pedro-mendonca/glotpress-stubs/glotpress-stubs.php
+	paths:
+		- gp-project-icon.php
+		- includes/
+		- gp-templates/
+	bootstrapFiles:
+		# PHPStan bootstrap file.
+		- tests/phpstan/bootstrap.php

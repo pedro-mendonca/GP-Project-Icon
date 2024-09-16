@@ -1,0 +1,331 @@
+/* CSS for GP-Project-Icon. */
+table {
+
+	&.gp-table {
+
+		// Generic UI elements.
+		button {
+			display: inline-block;
+
+			&.hidden {
+				display: none;
+			}
+		}
+
+		button.delete {
+			padding: 0;
+			border: none;
+			background: none;
+			cursor: pointer;
+			color: var(--gp-color-primary-500);
+
+			&:disabled {
+				color: var(--gp-color-btn-disabled-text);
+				cursor: default;
+			}
+
+			span.dashicons {
+				font-size: 1rem;
+				vertical-align: middle;
+			}
+
+		}
+
+		div.progress-notice {
+			font-size: 0.75em;
+			font-style: italic;
+			white-space: nowrap;
+		}
+
+		td {
+
+			span.unknown {
+				text-align: center;
+				vertical-align: middle;
+				color: var(--gp-color-fg-muted);
+				font-style: italic;
+			}
+
+		}
+
+		&.gp-project-icon.tools-permission-admin,
+		&.gp-project-icon.tools-permission-validator,
+		&.gp-project-icon.tools-permission-other,
+		&.gp-project-icon.tools-originals,
+		&.gp-project-icon.tools-translation-sets,
+		&.gp-project-icon.tools-translations,
+		&.gp-project-icon.tools-glossaries {
+			width: auto;
+		}
+
+		&.translation-sets {
+
+			tbody {
+
+				tr {
+
+					td {
+
+						&.stats {
+
+							&:not(.percent) {
+
+								background-color: var(--gp-color-secondary-100);
+
+								&.highlight {
+
+									a {
+										opacity: 1;
+									}
+
+									&.translated {
+										background-color: var(--gp-color-status-current-subtle);
+									}
+
+									&.fuzzy {
+										background-color: var(--gp-color-status-fuzzy-subtle);
+									}
+
+									&.untranslated {
+										background-color: inherit;
+									}
+
+									&.waiting {
+										background-color: var(--gp-color-status-waiting-subtle);
+									}
+
+									&.old {
+										background-color: var(--gp-color-status-old-subtle);
+									}
+
+									&.rejected {
+										background-color: var(--gp-color-status-rejected-subtle);
+									}
+
+									&.changesrequested {
+										background-color: var(--gp-color-status-changesrequested-subtle);
+									}
+
+									&.warnings {
+										background-color: inherit;
+									}
+
+								}
+
+							}
+
+							&.old,
+							&.rejected,
+							&.changesrequested {
+
+								div.progress-notice {
+									font-size: 0.75em;
+									font-style: italic;
+									white-space: nowrap;
+								}
+
+								a,
+								button {
+									display: inline-block;
+
+									&.hidden {
+										display: none;
+									}
+								}
+
+								a {
+									padding: 0 1rem;
+									width: 100%;
+								}
+
+								button.delete {
+									position: absolute;
+									translate: -1rem;
+								}
+
+							}
+
+						}
+
+					}
+
+				}
+
+			}
+
+		}
+
+		&.tools-permission-validator {
+
+			tr {
+
+				&.duplicate {
+					background-color: var(--gp-color-attention-emphasis);
+
+					td {
+
+						&.action {
+
+							span.duplicate {
+								color: var(--gp-color-bubble-inactive-project-text);
+								padding: 0.2em 0.5em;
+								border: 1px solid var(--gp-color-bubble-inactive-project-text);
+								border-radius: 1em;
+								text-decoration: none;
+								text-align: center;
+								text-shadow: none;
+								margin-left: 0.2rem;
+								font-weight: 500;
+								font-size: 80%;
+								background-color: #fff;
+							}
+
+						}
+
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
+}
+
+section {
+
+	&.gp-project-icon {
+		margin-top: 2rem;
+	}
+
+}
+
+// System notices.
+.notice {
+
+	&.notice-info {
+		background-color: var(--gp-color-primary-50);
+	}
+
+}
+
+// Header links.
+div.gp-heading div.gp-project-icon-tools {
+	margin-left: auto;
+
+	a {
+
+		&.gp-project-icon-tool-link {
+			font-size: 1.125rem;
+			font-weight: 600;
+
+			&.current {
+				text-decoration: underline;
+
+				&:hover {
+					text-decoration-thickness: 0.125rem;
+				}
+
+			}
+
+		}
+
+	}
+
+}
+
+// Padding important for small columns.
+.tablesorter-glotpress .tablesorter-header:not(.sorter-false) {
+	padding-right: 2.5em;
+	padding-left: 1em;
+}
+
+td.stats {
+	text-align: center;
+}
+
+table.gp-project-icon.tools-glossaries td.id:not(.unknown),
+table.gp-project-icon.tools-glossaries td.entries {
+	text-align: center;
+}
+
+table.gp-project-icon.tools-glossaries td.entries a {
+	text-decoration: none;
+	color: var(--gp-color-fg-default);
+	font-weight: 600;
+	display: block;
+
+	&:hover,
+	&:focus {
+		text-decoration: underline;
+		text-underline-offset: 0.1em;
+		text-underline-position: under;
+		text-decoration-thickness: 0.125rem;
+	}
+
+}
+
+table.gp-table tbody td,
+table.gp-table tbody th {
+	padding: 0.5em 2em;
+}
+
+.gptoolbox-description {
+
+	span.translation-status,
+	code {
+		padding: 0 4px;
+	}
+
+	span.translation-status {
+
+		&.current {
+			background-color: var(--gp-color-status-current-subtle);
+		}
+
+		&.fuzzy {
+			background-color: var(--gp-color-status-fuzzy-subtle);
+		}
+
+		&.waiting {
+			background-color: var(--gp-color-status-waiting-subtle);
+		}
+
+		&.old {
+			background-color: var(--gp-color-status-old-subtle);
+		}
+
+		&.rejected {
+			background-color: var(--gp-color-status-rejected-subtle);
+		}
+
+		&.changesrequested {
+			background-color: var(--gp-color-status-changesrequested-subtle);
+		}
+
+	}
+
+	code {
+		background-color: var(--gp-color-primary-50);
+	}
+
+}
+
+ul.gptoolbox-description {
+	list-style: none;
+	padding-left: 0.5rem;
+
+	li {
+
+		&::before {
+			font-family: dashicons;
+			content: "\f147";
+			color: var(--gp-color-primary);
+			vertical-align: middle;
+		}
+
+	}
+
+}

@@ -14,7 +14,7 @@ Set of tools to help you manage your GlotPress.
 
 == Description ==
 
-This set of tools extends the functionality of GlotPress, bringing to light any potential problems hidden under the hood, keeping it clean, fast and trouble-free.
+This GlotPress plugin allows you to add icons to your projects.
 
 == Features ==
 

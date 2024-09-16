@@ -13,7 +13,7 @@
  * Plugin URI:        https://wordpress.org/plugins/gp-project-icon/
  * GitHub Plugin URI: https://github.com/pedro-mendonca/GP-Project-Icon
  * Primary Branch:    main
- * Description:       This set of tools extends the functionality of GlotPress, bringing to light any potential problems hidden under the hood, keeping it clean, fast and trouble-free.
+ * Description:       This GlotPress plugin allows you to add icons to your projects.
  * Version:           1.0.0
  * Requires at least: 5.3
  * Tested up to:      6.5

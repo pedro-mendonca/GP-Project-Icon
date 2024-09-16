@@ -26,7 +26,7 @@ gp_tmpl_header();
 
 $args = array(
 	'title'       => esc_html__( 'About GP Project Icon', 'gp-project-icon' ), // Page title.
-	'description' => esc_html__( 'This set of tools extends the functionality of GlotPress, bringing to light any potential problems hidden under the hood, keeping it clean, fast and trouble-free.', 'gp-project-icon' ), // Page description.
+	'description' => esc_html__( 'This GlotPress plugin allows you to add icons to your projects.', 'gp-project-icon' ), // Page description.
 );
 
 // Load GP-Project-Icon header template.

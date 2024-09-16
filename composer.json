@@ -1,6 +1,6 @@
 {
   "name": "pedro-mendonca/gp-project-icon",
-  "description": "This set of tools extends the functionality of GlotPress, bringing to light any potential problems hidden under the hood, keeping it clean, fast and trouble-free.",
+  "description": "This GlotPress plugin allows you to add icons to your projects.",
   "license": "GPL-2.0-or-later",
   "type": "wordpress-plugin",
   "authors": [

@@ -88,7 +88,7 @@ msgstr "Sobre o GP Project Icon"
 
 #. Description of the plugin
 #: gp-templates/gptoolbox-about.php:29
-msgid "This set of tools extends the functionality of GlotPress, bringing to light any potential problems hidden under the hood, keeping it clean, fast and trouble-free."
+msgid "This GlotPress plugin allows you to add icons to your projects."
 msgstr "Este conjunto de ferramentas amplia as funcionalidades do GlotPress, trazendo à luz quaisquer potenciais problemas escondidos, mantendo-o limpo, rápido e livre de problemas."
 
 #: gp-templates/gptoolbox-about.php:38

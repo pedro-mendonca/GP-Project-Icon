@@ -1,6 +1,6 @@
 <?php
 /**
- * Class file for the Project Icon.
+ * Class file for the Init.
  *
  * @package GP_Project_Icon
  *
@@ -22,12 +22,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! class_exists( __NAMESPACE__ . '\Project_Icon' ) ) {
+if ( ! class_exists( __NAMESPACE__ . '\Init' ) ) {
 
 	/**
-	 * Class Project_Icon.
+	 * Class Init.
 	 */
-	class Project_Icon {
+	class Init {
 
 
 		/**

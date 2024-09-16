@@ -44,6 +44,10 @@ if ( ! class_exists( __NAMESPACE__ . '\Init' ) ) {
 				return;
 			}
 
+			//
+			add_action( 'gp_after_project_form_fields', array( self::class, 'project_form' ) );
+
+			/*
 			// Register and enqueue plugin style sheet.
 			add_action( 'wp_enqueue_scripts', array( self::class, 'register_plugin_styles' ) );
 
@@ -67,6 +71,16 @@ if ( ! class_exists( __NAMESPACE__ . '\Init' ) ) {
 
 			// Instantiate Rest API.
 			new Rest_API();
+			*/
+		}
+
+		public static function project_form() {
+
+			?>
+			<dt><label for="project[icon]"><?php esc_html_e( 'Icon', 'gp-project-icon' ); ?></label></dt>
+			<dd><input type="text" name="project[icon]" value="<?php //echo esc_html( $project->icon ); ?>" id="project[icon]"></dd>
+			<?php
+
 		}
 
 

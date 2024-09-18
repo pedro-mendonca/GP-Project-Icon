@@ -37,6 +37,9 @@ if ( ! class_exists( __NAMESPACE__ . '\Init' ) ) {
 		 */
 		public function __construct() {
 
+			// Add project icon on Project header.
+			// add_action( 'gp_post_tmpl_load', array( self::class, 'project_header_icon' ) );
+
 			// Add Project Icon field to the form.
 			add_action( 'gp_after_project_form_fields', array( self::class, 'project_form_icon' ) );
 
@@ -53,15 +56,15 @@ if ( ! class_exists( __NAMESPACE__ . '\Init' ) ) {
 			self::register_scripts();
 
 			// Load things before templates.
-			add_action( 'gp_pre_tmpl_load', array( self::class, 'pre_template_load' ), 10, 2 );
+			// add_action( 'gp_pre_tmpl_load', array( self::class, 'pre_template_load' ), 10, 2 );
 
 			//add_action( 'gp_footer', array( self::class, 'media_selector_print_scripts' ), 10, 2 );
 
-			/*
+
 			// Load things after templates.
 			add_action( 'gp_post_tmpl_load', array( self::class, 'post_template_load' ), 10, 2 );
 
-
+/*
 			// Register extra GlotPress routes.
 			add_action( 'template_redirect', array( $this, 'register_gp_routes' ), 5 );
 
@@ -139,14 +142,50 @@ if ( ! class_exists( __NAMESPACE__ . '\Init' ) ) {
 
 		}
 
-		public static function project_form_icon( $project ) {
 
-			// var_dump( $project );
+		public static function project_header_icon( $project ) {
+
+			// Get existent project icon.
+			$project_icon = self::get_project_icon( $project );
+			if ( $project_icon ) {
+				// Project has icon, show icon image.
+
+			} else {
+				// Project has no icon, show icon placeholder.
+
+			}
 
 			?>
-			<dt><label for="project[icon]"><?php esc_html_e( 'Icon', 'gp-project-icon' ); ?></label></dt>
-			<dd><input type="text" name="project[icon]" value="<?php //echo esc_html( $project->icon ); ?>" id="project[icon]"></dd>
+			<div class='image-preview-wrapper'>
+				<img id='image-preview' src='<?php echo wp_get_attachment_url( $project_icon ); ?>' height='100'>
+			</div>
+
 			<?php
+		}
+
+		public static function project_form_icon( $project ) {
+
+			//var_dump( $project );
+
+			// Get existent project icon.
+			$project_icon = self::get_project_icon( $project );
+			if ( $project_icon ) {
+				// Project has icon, show icon image.
+
+			} else {
+				// Project has no icon, show icon placeholder.
+
+			}
+
+			?>
+			<div class='image-preview-wrapper'>
+				<img id='image-preview' src='<?php echo wp_get_attachment_url( $project_icon ); ?>' height='100'>
+			</div>
+
+			<dt><label for="project[icon]"><?php esc_html_e( 'Icon', 'gp-project-icon' ); ?></label></dt>
+			<dd><input type="text" name="project[icon]" value="<?php echo esc_html( $project_icon ); ?>" id="project[icon]"></dd>
+			<?php
+						/*
 
 			$project_icon = esc_attr( self::get_project_icon( $project ) );
 
@@ -164,6 +203,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Init' ) ) {
 			</p>
 
 			<?php
+			*/
 			/*
 
 			// Save attachment ID
@@ -173,6 +213,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Init' ) ) {
 
 			wp_enqueue_media();
 			*/
+			/*
 			?>
 
 			<div class='image-preview-wrapper'>
@@ -182,6 +223,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Init' ) ) {
 			<input type='hidden' name='image_attachment_id' id='image_attachment_id' value='<?php echo get_option( 'media_selector_attachment_id' ); ?>'>
 			<?php
 
+			*/
 
 
 
@@ -215,7 +257,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Init' ) ) {
 		public static function update_project_icon( $project ) {
 
 			// TODO: Sanitize.
-			$project_icon = $_POST['project_icon'];
+			$project_icon = $_POST['project']['icon'];
 
 			return gp_update_meta( $project->id, 'project_icon', $project_icon, 'project' );
 		}
@@ -368,8 +410,12 @@ if ( ! class_exists( __NAMESPACE__ . '\Init' ) ) {
 
 			// Currently unused.
 
+			if ( $template === 'header' ) {
+				echo 'PEDRO';
+			}
+
 			// Unset unused variables.
-			unset( $template, $args );
+			//unset( $template, $args );
 		}
 
 

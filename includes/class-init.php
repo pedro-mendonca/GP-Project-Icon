@@ -62,7 +62,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Init' ) ) {
 
 
 			// Load things after templates.
-			add_action( 'gp_post_tmpl_load', array( self::class, 'post_template_load' ), 10, 2 );
+			//add_action( 'gp_post_tmpl_load', array( self::class, 'post_template_load' ), 10, 2 );
 
 /*
 			// Register extra GlotPress routes.
@@ -409,13 +409,47 @@ if ( ! class_exists( __NAMESPACE__ . '\Init' ) ) {
 		public static function post_template_load( $template, &$args ) {
 
 			// Currently unused.
-
+			// var_dump( $template, $args );
 			if ( $template === 'header' ) {
-				echo 'PEDRO';
+
+				echo 'Post Header';
+				var_dump( get_defined_vars() );
 			}
 
-			// Unset unused variables.
-			//unset( $template, $args );
+			if ( isset( $args['project'] ) ) {
+				echo 'PROJECT 2!';
+
+				$project = $args['project'];
+				//var_dump( $project );
+
+				if ( $project ) {
+
+					// Get existent project icon.
+					$project_icon = self::get_project_icon( $project );
+					//var_dump( $project_icon );
+
+					if ( $project_icon ) {
+						// Project has icon, show icon image.
+						?>
+						<div class='image-preview-wrapper'>
+							<img id='image-preview' src='<?php echo wp_get_attachment_url( $project_icon ); ?>' height='100'>
+						</div>
+
+						<?php
+
+					} else {
+						// Project has no icon, show icon placeholder.
+
+					}
+
+				}
+
+				// Get existent project icon.
+				$project_icon = self::get_project_icon( $project );
+
+			}
+
+
 		}
 
 

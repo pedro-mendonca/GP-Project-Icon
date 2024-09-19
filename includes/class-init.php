@@ -37,8 +37,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Init' ) ) {
 		 */
 		public function __construct() {
 
-			// Add project icon on Project header.
-			// add_action( 'gp_post_tmpl_load', array( self::class, 'project_header_icon' ) );
+
 
 			// Add Project Icon field to the form.
 			add_action( 'gp_after_project_form_fields', array( self::class, 'project_form_icon' ) );
@@ -53,10 +52,12 @@ if ( ! class_exists( __NAMESPACE__ . '\Init' ) ) {
 			add_action( 'gp_project_deleted', array( self::class, 'delete_project_icon' ) );
 
 			// Register and enqueue plugin style sheet.
-			self::register_scripts();
+			// self::register_scripts();
+
+
 
 			// Load things before templates.
-			// add_action( 'gp_pre_tmpl_load', array( self::class, 'pre_template_load' ), 10, 2 );
+			add_action( 'gp_pre_tmpl_load', array( self::class, 'pre_template_load' ), 10, 2 );
 
 			//add_action( 'gp_footer', array( self::class, 'media_selector_print_scripts' ), 10, 2 );
 
@@ -143,24 +144,33 @@ if ( ! class_exists( __NAMESPACE__ . '\Init' ) ) {
 		}
 
 
-		public static function project_header_icon( $project ) {
+		public static function project_header_icon( $teste ) {
+			var_dump( get_defined_vars() );
+
+
+			echo $teste;
+
+			// if ( ! $project ) {
+				return;
+			//}
 
 			// Get existent project icon.
 			$project_icon = self::get_project_icon( $project );
 			if ( $project_icon ) {
 				// Project has icon, show icon image.
+				?>
+				<div class='image-preview-wrapper'>
+					<img id='image-preview' src='<?php echo wp_get_attachment_url( $project_icon ); ?>' height='100'>
+				</div>
+
+				<?php
 
 			} else {
 				// Project has no icon, show icon placeholder.
 
 			}
 
-			?>
-			<div class='image-preview-wrapper'>
-				<img id='image-preview' src='<?php echo wp_get_attachment_url( $project_icon ); ?>' height='100'>
-			</div>
 
-			<?php
 		}
 
 		public static function project_form_icon( $project ) {
@@ -171,20 +181,24 @@ if ( ! class_exists( __NAMESPACE__ . '\Init' ) ) {
 			$project_icon = self::get_project_icon( $project );
 			if ( $project_icon ) {
 				// Project has icon, show icon image.
+				?>
+				<div class='image-preview-wrapper'>
+					<img id='image-preview' src='<?php echo wp_get_attachment_url( $project_icon ); ?>' height='100'>
+				</div>
 
+
+				<?php
 			} else {
 				// Project has no icon, show icon placeholder.
 
 			}
 
 			?>
-			<div class='image-preview-wrapper'>
-				<img id='image-preview' src='<?php echo wp_get_attachment_url( $project_icon ); ?>' height='100'>
-			</div>
-
 			<dt><label for="project[icon]"><?php esc_html_e( 'Icon', 'gp-project-icon' ); ?></label></dt>
 			<dd><input type="text" name="project[icon]" value="<?php echo esc_html( $project_icon ); ?>" id="project[icon]"></dd>
 			<?php
+
+
 						/*
 
 			$project_icon = esc_attr( self::get_project_icon( $project ) );
@@ -362,7 +376,35 @@ if ( ! class_exists( __NAMESPACE__ . '\Init' ) ) {
 		 *
 		 * @return void
 		 */
-		public static function pre_template_load( $template, &$args ) {
+		public static function pre_template_load( $template, $args ) {
+
+			if ( $template === 'project' && isset( $args['project'] ) ) {
+
+				$project = $args['project'];
+
+				// Add project icon on Project header, below notices.
+				add_action( 'gp_after_notices', function () use ( $project ) {
+
+					// Get existent project icon.
+					$project_icon = self::get_project_icon( $project );
+					//var_dump( $project_icon );
+					if ( $project_icon ) {
+						// Project has icon, show icon image.
+						?>
+						<div class='image-preview-wrapper'>
+							<img id='image-preview' src='<?php echo wp_get_attachment_url( $project_icon ); ?>' height='100'>
+						</div>
+
+						<?php
+
+					} else {
+						// Project has no icon, show icon placeholder.
+
+					}
+				});
+			}
+
+			return;
 
 			wp_enqueue_media();
 
@@ -406,18 +448,23 @@ if ( ! class_exists( __NAMESPACE__ . '\Init' ) ) {
 		 *
 		 * @return void
 		 */
-		public static function post_template_load( $template, &$args ) {
+		public static function post_template_load( $template, $args ) {
+
+
 
 			// Currently unused.
-			// var_dump( $template, $args );
-			if ( $template === 'header' ) {
 
-				echo 'Post Header';
-				var_dump( get_defined_vars() );
+			if ( $template === 'header' ) {
+				//var_dump( $template, $args );
+				//var_dump( $template );
+				//var_dump( $args );
+
+				//echo 'Post Header';
+				//var_dump( get_defined_vars() );
 			}
 
 			if ( isset( $args['project'] ) ) {
-				echo 'PROJECT 2!';
+				//echo 'PROJECT 2!';
 
 				$project = $args['project'];
 				//var_dump( $project );

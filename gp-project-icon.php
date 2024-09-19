@@ -3,7 +3,7 @@
  * GP Project Icon
  *
  * @package           GP_Project_Icon
- * @link              https://github.com/pedro-mendonca/GP_Project_Icon
+ * @link              https://github.com/pedro-mendonca/GP-Project-Icon
  * @author            Pedro Mendonça
  * @copyright         2024 Pedro Mendonça
  * @license           GPL-2.0-or-later

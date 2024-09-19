@@ -55,6 +55,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Init' ) ) {
 			// self::register_scripts();
 
 
+
 			// Load things before templates.
 			add_action( 'gp_pre_tmpl_load', array( self::class, 'pre_template_load' ), 10, 2 );
 
@@ -74,201 +75,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Init' ) ) {
 			// Instantiate Rest API.
 			new Rest_API();
 			*/
-
-			//add_action( 'wp_enqueue_scripts', array( self::class, 'enqueue_scripts' ) );
 		}
-
-
-		/**
-		 * Call wp_enqueue_media() to load up all the scripts we need for media uploader
-		 */
-		public static function enqueue_scripts() {
-			//var_dump( GP_PROJECT_ICON_DIR_URL . 'assets/js/frontend.js' );
-			wp_enqueue_media();
-			wp_register_script(
-				'frontend-js',
-				GP_PROJECT_ICON_DIR_URL . 'assets/js/frontend.js',
-				array( 'jquery' ),
-				GP_PROJECT_ICON_VERSION,
-				false
-			);
-
-			gp_enqueue_scripts( 'frontend-js' );
-		}
-
-
-		/**
-		 * Add Project Icon field and preview to the Edit Form..
-		 *
-		 * @since 1.0.0
-		 *
-		 * @param GP_Project $project   GlotPress Project.
-		 *
-		 * @return void
-		 */
-		public static function project_form_icon( $project ) {
-
-			// Get existent project icon.
-			$project_icon = self::get_project_icon( $project );
-
-			// Add Project Icon field.
-			?>
-			<dt><label for="project[icon]"><?php esc_html_e( 'Icon', 'gp-project-icon' ); ?></label></dt>
-			<dd><input type="text" name="project[icon]" value="<?php echo esc_html( $project_icon ); ?>" id="project[icon]"></dd>
-			<?php
-
-			wp_enqueue_media();
-
-			// Project Icon preview.
-			if ( $project_icon ) {
-
-				// Project has icon, show icon image.
-				?>
-
-				<div class='image-preview-wrapper'>
-					<img id='image-preview' src='<?php echo wp_get_attachment_url( $project_icon ); ?>' width='100' height='100' style='max-height: 100px; width: 100px;'>
-				</div>
-
-
-
-
-				<?php
-
-			} else {
-				// Project has no icon, show icon placeholder.
-
-			}
-			?>
-			<input id="upload_image_button" type="button" class="button" value="<?php esc_attr_e( 'Upload image' ); ?>" />
-			<input type='hidden' name='image_attachment_id' id='image_attachment_id' value=''>
-
-			<input id="frontend-button" type="button" value="Select File" class="button" style="position: relative; z-index: 1;"><img id="frontend-image" />
-			<?php
-		}
-
-
-		/**
-		 * Update project icon.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @param GP_Project $project   GlotPress Project.
-		 *
-		 * @return bool   Return 'true' if updated successfully, 'false' if not.
-		 */
-		public static function update_project_icon( $project ) {
-
-			// TODO: Sanitize.
-			$project_icon = $_POST['project']['icon'];
-
-			return gp_update_meta( $project->id, 'project_icon', $project_icon, 'project' );
-		}
-
-
-		/**
-		 * Delete project icon.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @param GP_Project $project   GlotPress Project.
-		 *
-		 * @return bool   Return 'true' if deleted successfully, 'false' if not.
-		 */
-		public static function delete_project_icon( $project ) {
-
-			return gp_delete_meta( $project->id, 'project_icon', null, 'project' );
-		}
-
-
-		/**
-		 * Load things after templates.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @param string               $template   The template name.
-		 * @param array<string,string> $args       Arguments passed to the template.
-		 *
-		 * @return void
-		 */
-		public static function pre_template_load( $template, $args ) {
-
-			if ( $template === 'project' && isset( $args['project'] ) ) {
-
-				$project = $args['project'];
-
-				// Add project icon on Project header, below notices.
-				add_action( 'gp_after_notices', function () use ( $project ) {
-
-					// Get existent project icon.
-					$project_icon = self::get_project_icon( $project );
-					//var_dump( $project_icon );
-					if ( $project_icon ) {
-						// Project has icon, show icon image.
-						?>
-						<div class='image-preview-wrapper'>
-							<img id='image-preview' src='<?php echo wp_get_attachment_url( $project_icon ); ?>' height='100'>
-						</div>
-
-						<?php
-
-					} else {
-						// Project has no icon, show icon placeholder.
-
-					}
-				});
-			}
-
-			// WordPress media uploader scripts
-			if ( ! did_action( 'wp_enqueue_media' ) ) {
-				wp_enqueue_media();
-			}
-
-			// TODO: failing wp_enqueue_media();
-			$test = wp_enqueue_media();
-			var_dump( $test );
-
-			wp_register_script(
-				'frontend-js',
-				GP_PROJECT_ICON_DIR_URL . 'assets/js/frontend.js',
-				array( 'jquery' ),
-				GP_PROJECT_ICON_VERSION,
-				true
-			);
-
-			gp_enqueue_scripts( 'frontend-js' );
-
-			return;
-
-
-/*
-
-
-			if ( $template === 'project-new' || $template === 'project-edit' ) {
-
-
-
-				// Check if SCRIPT_DEBUG is true.
-				$suffix = SCRIPT_DEBUG ? '' : '.min';
-
-				// Set custom script ID.
-				$script_id = 'gp-project-icon-project-form';
-
-				wp_register_script(
-					$script_id,
-					GP_PROJECT_ICON_DIR_URL . 'assets/js/' . 'project-form' . $suffix . '.js',
-					array(
-						'jquery',
-					),
-					GP_PROJECT_ICON_VERSION,
-					false
-				);
-
-				gp_enqueue_scripts( $script_id );
-
-			}*/
-
-		}
-
 
 		public static function media_selector_print_scripts() {
 
@@ -366,7 +173,79 @@ if ( ! class_exists( __NAMESPACE__ . '\Init' ) ) {
 
 		}
 
+		public static function project_form_icon( $project ) {
 
+			//var_dump( $project );
+
+			// Get existent project icon.
+			$project_icon = self::get_project_icon( $project );
+
+			?>
+			<dt><label for="project[icon]"><?php esc_html_e( 'Icon', 'gp-project-icon' ); ?></label></dt>
+			<dd><input type="text" name="project[icon]" value="<?php echo esc_html( $project_icon ); ?>" id="project[icon]"></dd>
+			<?php
+
+
+			if ( $project_icon ) {
+				// Project has icon, show icon image.
+				?>
+				<div class='image-preview-wrapper'>
+					<img id='image-preview' src='<?php echo wp_get_attachment_url( $project_icon ); ?>' height='100'>
+				</div>
+
+
+				<?php
+			} else {
+				// Project has no icon, show icon placeholder.
+
+			}
+
+
+
+
+						/*
+
+			$project_icon = esc_attr( self::get_project_icon( $project ) );
+
+			?>
+			<p class="project-icon">
+				<label for="project-icon"><?php esc_html_e( 'Project Icon', 'gp-project-icon' ); ?></label><br />
+				<input type="hidden" name="project_icon" id="project-icon" value="<?php echo 'PEDRO'; //echo $project_icon; ?>" />
+				<img id="project-icon-preview" src="<?php //echo $project_icon; ?>" style="max-width: 100px; max-height: 100px;" /><br />
+				<input type="button" class="button" id="project-icon-button" value="<?php _e( 'Select Icon', 'glotpress' ); ?>" />
+				<input type="button" class="button" id="project-icon-remove" value="<?php _e( 'Remove Icon', 'glotpress' ); ?>" />
+
+				<!--<button class="custom_media_upload_button" />-->
+
+				<?php echo do_shortcode('[frontend-button]'); ?>
+			</p>
+
+			<?php
+			*/
+			/*
+
+			// Save attachment ID
+			if ( isset( $_POST['submit_image_selector'] ) && isset( $_POST['image_attachment_id'] ) ) :
+				update_option( 'media_selector_attachment_id', absint( $_POST['image_attachment_id'] ) );
+			endif;
+
+			wp_enqueue_media();
+			*/
+			/*
+			?>
+
+			<div class='image-preview-wrapper'>
+				<img id='image-preview' src='<?php echo wp_get_attachment_url( get_option( 'media_selector_attachment_id' ) ); ?>' height='100'>
+			</div>
+			<input id="upload_image_button" type="button" class="button" value="<?php _e( 'Upload image' ); ?>" />
+			<input type='hidden' name='image_attachment_id' id='image_attachment_id' value='<?php echo get_option( 'media_selector_attachment_id' ); ?>'>
+			<?php
+
+			*/
+
+
+
+		}
 
 
 		/**
@@ -384,7 +263,37 @@ if ( ! class_exists( __NAMESPACE__ . '\Init' ) ) {
 		}
 
 
+		/**
+		 * Update project icon.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param GP_Project $project   GlotPress Project.
+		 *
+		 * @return bool   Return 'true' if updated successfully, 'false' if not.
+		 */
+		public static function update_project_icon( $project ) {
 
+			// TODO: Sanitize.
+			$project_icon = $_POST['project']['icon'];
+
+			return gp_update_meta( $project->id, 'project_icon', $project_icon, 'project' );
+		}
+
+
+		/**
+		 * Delete project icon.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param GP_Project $project   GlotPress Project.
+		 *
+		 * @return bool   Return 'true' if deleted successfully, 'false' if not.
+		 */
+		public static function delete_project_icon( $project ) {
+
+			return gp_delete_meta( $project->id, 'project_icon', null, 'project' );
+		}
 
 
 		/**
@@ -461,7 +370,76 @@ if ( ! class_exists( __NAMESPACE__ . '\Init' ) ) {
 		}
 
 
+		/**
+		 * Load things after templates.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param string               $template   The template name.
+		 * @param array<string,string> $args       Arguments passed to the template.
+		 *
+		 * @return void
+		 */
+		public static function pre_template_load( $template, $args ) {
 
+			if ( $template === 'project' && isset( $args['project'] ) ) {
+
+				$project = $args['project'];
+
+				// Add project icon on Project header, below notices.
+				add_action( 'gp_after_notices', function () use ( $project ) {
+
+					// Get existent project icon.
+					$project_icon = self::get_project_icon( $project );
+					//var_dump( $project_icon );
+					if ( $project_icon ) {
+						// Project has icon, show icon image.
+						?>
+						<div class='image-preview-wrapper'>
+							<img id='image-preview' src='<?php echo wp_get_attachment_url( $project_icon ); ?>' height='100'>
+						</div>
+
+						<?php
+
+					} else {
+						// Project has no icon, show icon placeholder.
+
+					}
+				});
+			}
+
+			return;
+
+			wp_enqueue_media();
+
+			// https://gist.github.com/bcole808/b31ed5101b1723e77dce
+			// https://jeroensormani.com/how-to-include-the-wordpress-media-selector-in-your-plugin/
+
+			if ( $template === 'project-new' || $template === 'project-edit' ) {
+
+
+
+				// Check if SCRIPT_DEBUG is true.
+				$suffix = SCRIPT_DEBUG ? '' : '.min';
+
+				// Set custom script ID.
+				$script_id = 'gp-project-icon-project-form';
+
+				wp_register_script(
+					$script_id,
+					GP_PROJECT_ICON_DIR_URL . 'assets/js/' . 'project-form' . $suffix . '.js',
+					array(
+						'jquery',
+					),
+					GP_PROJECT_ICON_VERSION,
+					false
+				);
+
+				gp_enqueue_scripts( $script_id );
+
+			}
+
+		}
 
 
 		/**

@@ -75,7 +75,45 @@ if ( ! class_exists( __NAMESPACE__ . '\Init' ) ) {
 			new Rest_API();
 			*/
 
-			//add_action( 'wp_enqueue_scripts', array( self::class, 'enqueue_scripts' ) );
+			add_action( 'wp_enqueue_scripts', array( self::class, 'enqueue_scripts' ) );
+		}
+
+		public static function load_head_things() {
+			do_action( 'wp_head' );
+		}
+
+		public static function load_footer_things() {
+			do_action( 'wp_footer' );
+		}
+
+
+		public static function inspect_hook_callbacks( $hook_name ) {
+		    global $wp_filter;
+
+		    if ( isset( $wp_filter[ $hook_name ] ) ) {
+		        // WordPress 5.x and higher stores filters as WP_Hook objects
+		        $hook = $wp_filter[ $hook_name ];
+
+		        // If it's a WP_Hook object, get its callbacks
+		        if ( is_a( $hook, 'WP_Hook' ) && ! empty( $hook->callbacks ) ) {
+		            foreach ( $hook->callbacks as $priority => $callbacks ) {
+		                echo "<h3>Priority: $priority</h3>";
+		                foreach ( $callbacks as $callback ) {
+		                    if ( is_string( $callback['function'] ) ) {
+		                        // Simple function callback
+		                        echo 'Function: ' . $callback['function'] . '<br>';
+		                    } elseif ( is_array( $callback['function'] ) ) {
+		                        // Class method callback
+		                        echo 'Class: ' . get_class( $callback['function'][0] ) . ' -> Method: ' . $callback['function'][1] . '<br>';
+		                    }
+		                }
+		            }
+		        } else {
+		            echo "No callbacks found for the $hook_name action.";
+		        }
+		    } else {
+		        echo "The action $hook_name is not registered.";
+		    }
 		}
 
 
@@ -83,17 +121,94 @@ if ( ! class_exists( __NAMESPACE__ . '\Init' ) ) {
 		 * Call wp_enqueue_media() to load up all the scripts we need for media uploader
 		 */
 		public static function enqueue_scripts() {
-			//var_dump( GP_PROJECT_ICON_DIR_URL . 'assets/js/frontend.js' );
+
+
+			//add_action( 'gp_head', array( self::class, 'load_head_things' ) );
+			//add_action( 'gp_footer',  array( self::class, 'load_footer_things' ) );
+
+			add_action( 'gp_footer', 'wp_print_media_templates', 10 );
+			add_action( 'gp_footer', 'wp_print_footer_scripts', 20 );
+
+			/*
+			wp_enqueue_style('media-views');
+			wp_enqueue_style('wp-mediaelement');
+			wp_enqueue_style( 'imgareaselect' );
+			*/
+
+
+
+			//remove_action( 'wp_footer', 'wp_enqueue_global_styles', 1 );
+			//remove_action( 'wp_footer', 'wp_enqueue_stored_styles', 1 );
+			//remove_action( 'wp_footer', 'wp_maybe_inline_styles', 1 );
+
+			wp_dequeue_style( 'global-styles' );
+			wp_dequeue_style( 'admin-bar' );
+
 			wp_enqueue_media();
+
+
+
+
+
+
+			//remove_action( 'wp_footer', 'wp_print_media_templates', 10 );
+			//remove_action( 'wp_footer', 'output_footer_assets', 10 );
+			//remove_action( 'wp_footer', 'print_client_interactivity_data', 10 );
+
+
+			// remove_action( 'wp_footer', 'wp_print_footer_scripts', 20 );
+			//remove_action( 'wp_footer', 'wp_admin_bar_render', 1000 );
+
+
+			//remove_action( 'wp_footer',  array( self::class, 'load_footer_things' ) );
+			//remove_action( 'gp_head', array( self::class, 'load_head_things' ) );
+			//remove_action( 'gp_footer',  array( self::class, 'load_footer_things' ) );
+
+			// self::inspect_hook_callbacks( 'wp_footer' );
+
+			//wp_enqueue_script('media-upload');
+			//wp_enqueue_script('media-grid');
+		/*
+			wp_enqueue_script('media-editor');
+			wp_enqueue_script('media-views');
+			wp_enqueue_script('media-models');
+			wp_enqueue_script('wp-mediaelement');
+			wp_enqueue_style('media-views');
+			wp_enqueue_style('wp-mediaelement');
+			*/
+
+			// wp_enqueue_media();
 			wp_register_script(
 				'frontend-js',
 				GP_PROJECT_ICON_DIR_URL . 'assets/js/frontend.js',
-				array( 'jquery' ),
+				array(
+					'jquery',
+
+					'media-editor',
+					'media-audiovideo',
+					'media-views',
+					'wp-mediaelement',
+					'media-models',
+/*
+					'media-editor',
+					'media-audiovideo',
+					'media-views',
+					'wp-mediaelement',
+					'media-models',
+
+					//'media-grid',
+
+					'media-upload',
+					'wp-plupload',*/
+
+
+				),
 				GP_PROJECT_ICON_VERSION,
 				false
 			);
 
 			gp_enqueue_scripts( 'frontend-js' );
+
 		}
 
 
@@ -142,7 +257,9 @@ if ( ! class_exists( __NAMESPACE__ . '\Init' ) ) {
 			<input id="upload_image_button" type="button" class="button" value="<?php esc_attr_e( 'Upload image' ); ?>" />
 			<input type='hidden' name='image_attachment_id' id='image_attachment_id' value=''>
 
-			<input id="frontend-button" type="button" value="Select File" class="button" style="position: relative; z-index: 1;"><img id="frontend-image" />
+			<img id='frontend-image' src='<?php echo wp_get_attachment_url( $project_icon ); ?>' width='100' height='100' style='max-height: 100px; width: 100px;'>
+			<input id="frontend-button" type="button" value="Select File" class="button" style="position: relative; z-index: 1;">
+
 			<?php
 		}
 
@@ -218,24 +335,50 @@ if ( ! class_exists( __NAMESPACE__ . '\Init' ) ) {
 				});
 			}
 
-			// WordPress media uploader scripts
-			if ( ! did_action( 'wp_enqueue_media' ) ) {
-				wp_enqueue_media();
-			}
+			return;
+
+			// wp_default_scripts();
+			// Enqueue jQuery from WordPress default scripts
+			//wp_enqueue_script( 'jquery' );
+
+
 
 			// TODO: failing wp_enqueue_media();
-			$test = wp_enqueue_media();
-			var_dump( $test );
+			//$test = wp_enqueue_media();
+			//var_dump( $test );
+			//add_filter( 'wp_lazy_loading_enabled', '__return_false' );
+
+			//wp_enqueue_media();
 
 			wp_register_script(
 				'frontend-js',
 				GP_PROJECT_ICON_DIR_URL . 'assets/js/frontend.js',
-				array( 'jquery' ),
+				array(
+					'jquery',
+					//'media',
+
+
+					//'media-editor',
+					'media-audiovideo',
+					//'media-views',
+					//'wp-mediaelement',
+					//'media-models',
+
+					//'media-grid',
+
+					'media-upload',
+					//'wp-plupload',
+
+
+				),
 				GP_PROJECT_ICON_VERSION,
 				true
 			);
 
 			gp_enqueue_scripts( 'frontend-js' );
+
+			//global $wp_scripts;
+			//var_dump( $wp_scripts );
 
 			return;
 

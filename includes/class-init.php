@@ -226,40 +226,112 @@ if ( ! class_exists( __NAMESPACE__ . '\Init' ) ) {
 			// Get existent project icon.
 			$project_icon = self::get_project_icon( $project );
 
-			// Add Project Icon field.
+
+			// Project has icon, show icon image.
 			?>
-			<dt><label for="project[icon]"><?php esc_html_e( 'Icon', 'gp-project-icon' ); ?></label></dt>
-			<dd><input type="text" name="project[icon]" value="<?php echo esc_html( $project_icon ); ?>" id="project[icon]"></dd>
-			<?php
+			<style media="screen">
+				div.image-preview-wrapper {
+					position: relative;
+					display: inline-block;
+				}
+				#frontend-image {
+					max-height: 128px;
+					width: 128;
 
-			wp_enqueue_media();
+					max-height: 128px;
+					width: 128px;
+					display: block;
+					max-width: 100%;
 
-			// Project Icon preview.
-			if ( $project_icon ) {
+					color: var( --gp-color-fg-default );
 
-				// Project has icon, show icon image.
-				?>
+					border: 1px solid var( --gp-color-input-border );
+					border-radius: 2px;
+					box-shadow: none;
+					background-color: var( --gp-color-canvas-default );
+					background-color: var(--gp-color-primary-50);
+					outline: 0;
+					object-fit: cover;
+				}
+				#frontend-button-clear {
+					position: absolute;
+					top: -12px;
+					right: -12px;
+					border: none;
+					border-radius: 50%;
+					width: 24px;
+					height: 24px;
+					font-size: 18px;
+					text-align: center;
+					line-height: 22px;
+					cursor: pointer;
+					padding: 0;
+					min-height: unset;
+					justify-content: center;
+					align-items: center;
+				}
+				#frontend-button-clear span.dashicons.dashicons-no {
+					vertical-align: bottom;
+					//font-size: 18px;
+					//line-height: 1em;
 
+				}
+				#frontend-button {
+					display: block;
+					z-index: 1;
+					/*
+					position: absolute;
+					left: 50%;
+					top: 50%;
+					transform: translateX(-50%) translateY(-50%);
+					height: 128px;
+					width: 128px;
+					*/
+				}
+			</style>
+			<dt>
+				<label for="project[icon]"><?php esc_html_e( 'Icon', 'gp-project-icon' ); ?></label>
+			</dt>
+			<dd>
 				<div class='image-preview-wrapper'>
-					<img id='image-preview' src='<?php echo wp_get_attachment_url( $project_icon ); ?>' width='100' height='100' style='max-height: 100px; width: 100px;'>
+				<?php
+
+				$image_source = '';
+				$button_delete_visibile = false;
+
+				//var_dump( $project_icon );
+
+				// Project Icon preview.
+				if ( $project_icon && $project_icon !== '' ) {
+
+					$image_source = wp_get_attachment_url( $project_icon );
+					$button_delete_visibile = true;
+
+				}
+
+				$button_delete_visibility = $button_delete_visibile ? 'flex' : 'none';
+				//var_dump( $button_delete_visibility );
+
+				?>
+					<img id='frontend-image' src='<?php echo esc_attr( $image_source ); ?>' width='128' height='128'>
+					<button id="frontend-button-clear" class="button is-primary" style="display: <?php echo esc_attr( $button_delete_visibility ); ?>;">
+						<span class="dashicons dashicons-no"></span>
+						<span class="screen-reader-text"><?php esc_html_e( 'Clear', 'gp-project-icon' ); ?></span>
+					</button>
+
 				</div>
-
-
+				<input id="frontend-button" type="button" value="<?php esc_html_e( 'Select', 'gp-project-icon' ); ?>" class="button">
 
 
 				<?php
+				/*
+				<input id="frontend-button-clear" type="button" value="<?php esc_html_e( 'Clear', 'gp-project-icon' ); ?>" class="button" style="position: relative; z-index: 1;">
+				*/
+				?>
 
-			} else {
-				// Project has no icon, show icon placeholder.
+				<input type='hidden' name="project[icon]" id='image_attachment_id' value=''>
 
-			}
-			?>
-			<input id="upload_image_button" type="button" class="button" value="<?php esc_attr_e( 'Upload image' ); ?>" />
-			<input type='hidden' name='image_attachment_id' id='image_attachment_id' value=''>
-
-			<img id='frontend-image' src='<?php echo wp_get_attachment_url( $project_icon ); ?>' width='100' height='100' style='max-height: 100px; width: 100px;'>
-			<input id="frontend-button" type="button" value="Select File" class="button" style="position: relative; z-index: 1;">
-
+			</dd>
 			<?php
 		}
 
@@ -277,8 +349,14 @@ if ( ! class_exists( __NAMESPACE__ . '\Init' ) ) {
 
 			// TODO: Sanitize.
 			$project_icon = $_POST['project']['icon'];
+			//var_dump( $_POST );
+			//wp_die();
 
-			return gp_update_meta( $project->id, 'project_icon', $project_icon, 'project' );
+			if ( $project_icon ) {
+				return gp_update_meta( $project->id, 'project_icon', $project_icon, 'project' );
+			}
+
+			return gp_delete_meta( $project->id, 'project_icon', $project_icon, 'project' );
 		}
 
 
@@ -323,7 +401,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Init' ) ) {
 						// Project has icon, show icon image.
 						?>
 						<div class='image-preview-wrapper'>
-							<img id='image-preview' src='<?php echo wp_get_attachment_url( $project_icon ); ?>' height='100'>
+							<img id='image-preview' src='<?php echo wp_get_attachment_url( $project_icon ); ?>' height='128' width='128' style="object-fit: cover;">
 						</div>
 
 						<?php
@@ -334,81 +412,6 @@ if ( ! class_exists( __NAMESPACE__ . '\Init' ) ) {
 					}
 				});
 			}
-
-			return;
-
-			// wp_default_scripts();
-			// Enqueue jQuery from WordPress default scripts
-			//wp_enqueue_script( 'jquery' );
-
-
-
-			// TODO: failing wp_enqueue_media();
-			//$test = wp_enqueue_media();
-			//var_dump( $test );
-			//add_filter( 'wp_lazy_loading_enabled', '__return_false' );
-
-			//wp_enqueue_media();
-
-			wp_register_script(
-				'frontend-js',
-				GP_PROJECT_ICON_DIR_URL . 'assets/js/frontend.js',
-				array(
-					'jquery',
-					//'media',
-
-
-					//'media-editor',
-					'media-audiovideo',
-					//'media-views',
-					//'wp-mediaelement',
-					//'media-models',
-
-					//'media-grid',
-
-					'media-upload',
-					//'wp-plupload',
-
-
-				),
-				GP_PROJECT_ICON_VERSION,
-				true
-			);
-
-			gp_enqueue_scripts( 'frontend-js' );
-
-			//global $wp_scripts;
-			//var_dump( $wp_scripts );
-
-			return;
-
-
-/*
-
-
-			if ( $template === 'project-new' || $template === 'project-edit' ) {
-
-
-
-				// Check if SCRIPT_DEBUG is true.
-				$suffix = SCRIPT_DEBUG ? '' : '.min';
-
-				// Set custom script ID.
-				$script_id = 'gp-project-icon-project-form';
-
-				wp_register_script(
-					$script_id,
-					GP_PROJECT_ICON_DIR_URL . 'assets/js/' . 'project-form' . $suffix . '.js',
-					array(
-						'jquery',
-					),
-					GP_PROJECT_ICON_VERSION,
-					false
-				);
-
-				gp_enqueue_scripts( $script_id );
-
-			}*/
 
 		}
 

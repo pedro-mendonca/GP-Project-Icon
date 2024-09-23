@@ -1,38 +1,65 @@
 /* global document, wp */
 
-(function($) {
+jQuery( document ).ready( function( $ ) {
+	var fileframe; // Variable for the wp.media fileframe
 
-$(document).ready( function() {
-	var file_frame; // variable for the wp.media file_frame
+	var projectIconSelect = $( '#frontend-button' );
+	var projectIconClear = $( '#frontend-button-clear' );
+	var projectIconPreview = $( '#frontend-image' );
+	var projectIconAttachmentID = $( '#image_attachment_id' );
 
 	// attach a click event (or whatever you want) to some element on your page
-	$( '#frontend-button' ).on( 'click', function( event ) {
+	$( projectIconSelect ).on( 'click', function( event ) {
 		event.preventDefault();
+		console.log( event );
 
-		// if the file_frame has already been created, just reuse it
-		if ( file_frame ) {
-			file_frame.open();
+		// if the fileframe has already been created, just reuse it
+		if ( fileframe ) {
+			fileframe.open();
 			return;
 		}
 
-		file_frame = wp.media.frames.file_frame = wp.media({
+		fileframe = wp.media.frames.fileframe = wp.media( {
 			title: $( this ).data( 'uploader_title' ),
 			button: {
 				text: $( this ).data( 'uploader_button_text' ),
 			},
-			multiple: false // set this to true for multiple file selection
-		});
+			multiple: false, // set this to true for multiple file selection
+		} );
 
-		file_frame.on( 'select', function() {
-			attachment = file_frame.state().get('selection').first().toJSON();
+		fileframe.on( 'select', function() {
+			var attachment = fileframe.state().get( 'selection' ).first().toJSON();
 
-			// do something with the file here
-			$( '#frontend-button' ).hide();
-			$( '#frontend-image' ).attr('src', attachment.url);
-		});
+			// Set the image preview by adding the URL to the src attribute.
+			$( projectIconPreview ).attr( 'src', attachment.url );
 
-		file_frame.open();
-	});
-});
+			// Set the value of the image_attachment_id hidden input.
+			$( projectIconAttachmentID ).attr( 'value', attachment.id );
 
-})(jQuery);
+			// Show the Clear button.
+			$( projectIconClear ).show();
+
+			// Hide the Select button.
+			// $( projectIconSelect ).hide();
+		} );
+
+		fileframe.open();
+	} );
+
+	// attach a click event (or whatever you want) to some element on your page
+	$( projectIconClear ).on( 'click', function( event ) {
+		event.preventDefault();
+
+		// Clear the image preview by removing the src attribute.
+		$( projectIconPreview ).attr( 'src', '' );
+
+		// Clear the value of the image_attachment_id hidden input.
+		$( projectIconAttachmentID ).attr( 'value', '' );
+
+		// Hide the Clear button.
+		$( projectIconClear ).hide();
+
+		// Show the Select button.
+		// $( projectIconSelect ).show();
+	} );
+} );

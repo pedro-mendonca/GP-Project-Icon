@@ -8,6 +8,8 @@ jQuery( document ).ready( function( $ ) {
 	var projectIconPreview = $( '#frontend-image' );
 	var projectIconAttachmentID = $( '#image_attachment_id' );
 
+	console.log( 'Loaded project-edit.js' );
+
 	// attach a click event (or whatever you want) to some element on your page
 	$( projectIconSelect ).on( 'click', function( event ) {
 		event.preventDefault();

@@ -69,10 +69,9 @@ div.image-preview-wrapper {
 
 .gp-content #projects dl dt a span.icon {
 	margin-right: 0.2rem;
-
 }
 
 .gp-content #projects dl dt a span.icon img {
-
 	background-color: var(--gp-color-primary-50);
+	object-fit: cover;
 }

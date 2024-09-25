@@ -78,17 +78,43 @@ if ( ! class_exists( __NAMESPACE__ . '\Project_Icon' ) ) {
 					if ( $project_icon ) {
 						// Project has icon, show icon image.
 						?>
-						<div class='image-preview-wrapper'>
+						<div class='icon-wrapper'>
 							<img id='image-preview' src='<?php echo wp_get_attachment_url( $project_icon ); ?>' height='128' width='128' style="object-fit: cover;">
 						</div>
-
 						<?php
 
 					} else {
 						// Project has no icon, show icon placeholder.
 
 					}
-				});
+				} );
+
+				$gp_has_filter = true;
+
+				if ( $gp_has_filter ) {
+					// Add icon to the project link.
+					add_action( 'gp_project_template_projects_items', array( self::class, 'project_row_items' ), 10, 2 );
+
+				} else {
+					// Fallback to modifying the template DOM without filter.
+					$sub_projects = $args['sub_projects'];
+
+					$args['project_icon_urls'] = self::get_project_icons_urls( $sub_projects );
+
+					// Register and enqueue GlotPress project template scripts.
+					add_action(
+						'wp_enqueue_scripts',
+						function () use ( $template, $args ) {
+							self::register_plugin_scripts(
+								$template,
+								$args,
+								array(
+									'jquery',
+								)
+							);
+						}
+					);
+				}
 			}
 
 			if ( $template === 'project-edit' ) {
@@ -119,24 +145,56 @@ if ( ! class_exists( __NAMESPACE__ . '\Project_Icon' ) ) {
 
 			if ( $template === 'projects' ) {
 
-				$projects = $args['projects'];
+				$gp_has_filter = true;
 
-				$args['project_icon_urls'] = self::get_project_icons_urls( $projects );
+				if ( $gp_has_filter ) {
+					// Add icon to the project link.
+					add_action( 'gp_project_template_projects_items', array( self::class, 'project_row_items' ), 10, 2 );
 
-				// Register and enqueue GlotPress project template scripts.
-				add_action(
-					'wp_enqueue_scripts',
-					function () use ( $template, $args ) {
-						self::register_plugin_scripts(
-							$template,
-							$args,
-							array(
-								'jquery',
-							)
-						);
-					}
-				);
+				} else {
+					// Fallback to modifying the template DOM without filter.
+					$projects = $args['projects'];
+
+					$args['project_icon_urls'] = self::get_project_icons_urls( $projects );
+
+					// Register and enqueue GlotPress project template scripts.
+					add_action(
+						'wp_enqueue_scripts',
+						function () use ( $template, $args ) {
+							self::register_plugin_scripts(
+								$template,
+								$args,
+								array(
+									'jquery',
+								)
+							);
+						}
+					);
+				}
 			}
+		}
+
+
+		/**
+		 * Update project icon.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param array $project_row_items   The array of project items to render on the projects list.
+		 * @param GP_Project $project        GP_Project object.
+		 *
+		 * @return array   The modified array of project items to render on the projects list.
+		 */
+		public static function project_row_items( $project_row_items, $project ) {
+
+			$project_icon_url = self::get_project_icon_url( $project );
+
+			$project_row_items['link-name'] = gp_link_project_get(
+				$project,
+				'<span class="icon"><img src="' . $project_icon_url . '" width=32 height=32></span><span class="name">' . esc_html( $project->name ) . '</span>'
+			);
+
+			return $project_row_items;
 
 		}
 
@@ -241,77 +299,15 @@ if ( ! class_exists( __NAMESPACE__ . '\Project_Icon' ) ) {
 
 			// Project has icon, show icon image.
 			?>
-			<style media="screen">
-				div.image-preview-wrapper {
-					position: relative;
-					display: inline-block;
-				}
-				#frontend-image {
-					max-height: 128px;
-					width: 128;
-
-					max-height: 128px;
-					width: 128px;
-					display: block;
-					max-width: 100%;
-
-					color: var( --gp-color-fg-default );
-
-					border: 1px solid var( --gp-color-input-border );
-					border-radius: 2px;
-					box-shadow: none;
-					background-color: var( --gp-color-canvas-default );
-					background-color: var(--gp-color-primary-50);
-					outline: 0;
-					object-fit: cover;
-				}
-				#frontend-button-clear {
-					position: absolute;
-					top: -12px;
-					right: -12px;
-					border: none;
-					border-radius: 50%;
-					width: 24px;
-					height: 24px;
-					font-size: 18px;
-					text-align: center;
-					line-height: 22px;
-					cursor: pointer;
-					padding: 0;
-					min-height: unset;
-					justify-content: center;
-					align-items: center;
-				}
-				#frontend-button-clear span.dashicons.dashicons-no {
-					vertical-align: bottom;
-					//font-size: 18px;
-					//line-height: 1em;
-
-				}
-				#frontend-button {
-					display: block;
-					z-index: 1;
-					/*
-					position: absolute;
-					left: 50%;
-					top: 50%;
-					transform: translateX(-50%) translateY(-50%);
-					height: 128px;
-					width: 128px;
-					*/
-				}
-			</style>
-			<dt>
+			<dt class="project-icon">
 				<label for="project[icon]"><?php esc_html_e( 'Icon', 'gp-project-icon' ); ?></label>
 			</dt>
-			<dd>
-				<div class='image-preview-wrapper'>
+			<dd class="project-icon">
+				<div class='icon-preview-wrapper'>
 				<?php
 
 				$image_source = '';
 				$button_delete_visibile = false;
-
-				//var_dump( $project_icon );
 
 				// Project Icon preview.
 				if ( $project_icon && $project_icon !== '' ) {
@@ -438,34 +434,5 @@ if ( ! class_exists( __NAMESPACE__ . '\Project_Icon' ) ) {
 
 			return gp_delete_meta( $project->id, 'project_icon', null, 'project' );
 		}
-
-
-		/**
-		 * Check if the current user is logged in, can manage options and has GlotPress admin previleges.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @return bool   Return true or false.
-		 */
-		public static function current_user_is_glotpress_admin() {
-
-			// Check if user is logged in.
-			if ( ! is_user_logged_in() ) {
-				return false;
-			}
-
-			// Check if user can manage options.
-			if ( ! current_user_can( 'manage_options' ) ) {
-				return false;
-			}
-
-			// Check if user has GlotPress admin previleges.
-			if ( ! GP::$permission->current_user_can( 'admin' ) ) {
-				return false;
-			}
-
-			return true;
-		}
-
 	}
 }

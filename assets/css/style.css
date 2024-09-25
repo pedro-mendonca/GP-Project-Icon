@@ -67,8 +67,10 @@ div.image-preview-wrapper {
 	vertical-align: middle;
 }
 
-.gp-content #projects dl dt a span.icon {
+.gp-content #projects dl dt a span.icon,
+.gp-content #sub-projects dl dt a span.icon {
 	margin-right: 0.2rem;
+	display: none;
 }
 
 .gp-content #projects dl dt a span.icon img {

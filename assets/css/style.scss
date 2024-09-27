@@ -1,0 +1,137 @@
+/* CSS for GP-Project-Icon. */
+
+/* Configuration of Global variables. */
+
+// Icons dimensions on the project lists.
+$project-list-icon: 2rem;
+
+// Icon dimensions on the project edit form media file preview.
+$project-edit-form-icon-preview: 8rem;
+
+// Icon dimensions on the project page header.
+$project-header-icon: 8rem;
+
+.gp-content {
+
+	#projects,
+	#sub-projects {
+
+		// Projects list items.
+		dl {
+
+			dt {
+
+				a {
+
+					display: inline-block;
+					vertical-align: middle;
+
+					span {
+
+						&.icon {
+							display: inline-block;
+							vertical-align: middle;
+							height: $project-list-icon;
+							width: $project-list-icon;
+							margin-right: 0.2rem;
+							background-color: var( --gp-color-primary-50 );
+
+							img {
+								height: 100%;
+								width: 100%;
+								max-height: 100%;
+								max-width: 100%;
+								object-fit: cover;
+								background-color: var( --gp-color-canvas-default );
+
+								&[src=""] {
+
+									/* Hide broken or missing images */
+									display: none;
+								}
+							}
+
+						}
+
+						&.name {
+							display: inline-block;
+							vertical-align: middle;
+							text-decoration: inherit;
+
+						}
+					}
+				}
+			}
+		}
+	}
+
+	// Project Editor Form.
+	form {
+
+		dd.project-icon {
+
+			div.icon-preview-wrapper {
+				position: relative;
+				display: block;
+				height: $project-edit-form-icon-preview;
+				width: $project-edit-form-icon-preview;
+				max-height: $project-edit-form-icon-preview;
+				max-width: $project-edit-form-icon-preview;
+
+				button#project-icon-button-clear {
+					position: absolute;
+					top: -12px;
+					right: -12px;
+					border: none;
+					border-radius: 50%;
+					width: 24px;
+					height: 24px;
+					font-size: 18px;
+					text-align: center;
+					line-height: 22px;
+					cursor: pointer;
+					padding: 0;
+					min-height: unset;
+					justify-content: center;
+					align-items: center;
+
+					span.dashicons.dashicons-no {
+						vertical-align: bottom;
+
+					}
+				}
+
+				input#project-icon-button-select {
+					display: block;
+					z-index: 1;
+
+					height: $project-edit-form-icon-preview;
+					width: $project-edit-form-icon-preview;
+					max-height: $project-edit-form-icon-preview;
+					max-width: $project-edit-form-icon-preview;
+
+					box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.1), inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+					background-color: #f0f0f1;
+					background-repeat: no-repeat;
+					background-size: cover;
+
+					&:hover,
+					&:focus {
+						border-color: var( --gp-color-accent-emphasis );
+	 					box-shadow: 0 0 0 1px var( --gp-color-accent-emphasis );
+					}
+				}
+			}
+		}
+	}
+
+	// Project header above name.
+	.project-header-icon-wrapper {
+
+		img.project-icon {
+			height: $project-header-icon;
+			width: $project-header-icon;
+			object-fit: cover;
+		}
+	}
+}

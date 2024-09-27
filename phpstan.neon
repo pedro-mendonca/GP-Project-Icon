@@ -1,0 +1,16 @@
+parameters:
+	level: 9
+	inferPrivatePropertyTypeFromConstructor: true
+	WPCompat:
+		requiresAtLeast: '5.3'
+	scanFiles:
+		# GlotPress Stubs
+		- %rootDir%/../../pedro-mendonca/glotpress-stubs/glotpress-stubs.php
+	paths:
+		- gp-project-icon.php
+		- includes/
+	bootstrapFiles:
+		# PHPStan bootstrap file.
+		- tests/phpstan/bootstrap.php
+	ignoreErrors:
+		- identifier: missingType.iterableValue

@@ -1,0 +1,43 @@
+{
+	"requires": true,
+	"lockfileVersion": 1,
+	"name": "gp-project-icon",
+	"version": "1.0.0",
+	"description": "This GlotPress plugin allows you to add icons to your projects.",
+	"author": "Pedro Mendonça",
+	"license": "GPL-2.0-or-later",
+	"keywords": [
+		"WordPress",
+		"GlotPress",
+		"translation",
+		"project",
+		"icon"
+	],
+	"homepage": "https://github.com/pedro-mendonca/GP-Project-Icon#readme",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/pedro-mendonca/GP-Project-Icon.git"
+	},
+	"bugs": {
+		"url": "https://github.com/pedro-mendonca/GP-Project-Icon/issues"
+	},
+	"devDependencies": {
+		"@wordpress/scripts": "^30.0.2",
+		"postcss-cli": "^11.0.0",
+		"sass": "^1.79.3",
+		"uglify-js": "^3.19.3"
+	},
+	"scripts": {
+		"build": "npm run build:js & npm run build:css",
+		"build:css": "npm run compile:css && npm run build:css:style",
+		"compile:css": "sass assets/css/ -c",
+		"build:css:style": "postcss assets/css/style.css > assets/css/style.min.css",
+		"build:js": "npm run build:js:projects & npm run build:js:project-edit",
+		"build:js:projects": "uglifyjs assets/js/projects.js --compress drop_console=true -o assets/js/projects.min.js",
+		"build:js:project-edit": "uglifyjs assets/js/project-edit.js --compress drop_console=true -o assets/js/project-edit.min.js",
+		"lint:css": "wp-scripts lint-style --fix",
+		"lint:js": "wp-scripts lint-js",
+		"lint:md:docs": "wp-scripts lint-md-docs",
+		"lint:pkg-json": "wp-scripts lint-pkg-json"
+	}
+}

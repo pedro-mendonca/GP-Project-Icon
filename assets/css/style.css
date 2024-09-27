@@ -73,6 +73,7 @@
   background-color: #f0f0f1;
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center;
 }
 .gp-content form dd.project-icon div.icon-preview-wrapper input#project-icon-button-select:hover, .gp-content form dd.project-icon div.icon-preview-wrapper input#project-icon-button-select:focus {
   border-color: var(--gp-color-accent-emphasis);

@@ -38,7 +38,6 @@
   },
   "archive": {
     "exclude": [
-      "composer.*",
       "!/vendor"
     ]
   },

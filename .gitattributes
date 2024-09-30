@@ -15,7 +15,6 @@
 /.markdownlintignore   export-ignore
 /.stylelintignore      export-ignore
 /.stylelintrc.json     export-ignore
-/composer.json         export-ignore
 /composer.lock         export-ignore
 /package-lock.json     export-ignore
 /package.json          export-ignore

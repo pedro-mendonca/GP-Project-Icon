@@ -10,5 +10,3 @@ parameters:
 	bootstrapFiles:
 		# PHPStan bootstrap file.
 		- tests/phpstan/bootstrap.php
-	ignoreErrors:
-		- identifier: missingType.iterableValue

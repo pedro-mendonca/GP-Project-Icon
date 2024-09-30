@@ -12,7 +12,7 @@ if ( ! defined( 'SCRIPT_DEBUG' ) ) {
 
 // Set plugin version.
 if ( ! defined( 'GP_PROJECT_ICON_VERSION' ) ) {
-	define( 'GP_PROJECT_ICON_VERSION', '1.2.5' );
+	define( 'GP_PROJECT_ICON_VERSION', '1.0.0' );
 }
 
 // Set plugin required PHP version. Needed for PHP compatibility check for WordPress < 7.2.

@@ -200,10 +200,10 @@ if ( ! class_exists( __NAMESPACE__ . '\Project_Icon' ) ) {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param array      $project_row_items   The array of project items to render on the projects list.
-		 * @param GP_Project $project             GP_Project object.
+		 * @param array<string,string|null> $project_row_items   The array of project items to render on the projects list.
+		 * @param GP_Project                $project             GP_Project object.
 		 *
-		 * @return array   The modified array of project items to render on the projects list.
+		 * @return array<string,string|null>   The modified array of project items to render on the projects list.
 		 */
 		public static function project_row_items( $project_row_items, $project ) {
 
@@ -375,17 +375,16 @@ if ( ! class_exists( __NAMESPACE__ . '\Project_Icon' ) ) {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param array $projects   Array of GP_Project objects.
+		 * @param array<int,GP_Project> $projects   Array of GP_Project objects.
 		 *
-		 * @return array            Array of the Icons of every project.
+		 * @return array<string,string|false>       Array of the Icons of every project.
 		 */
 		public static function get_project_icons_urls( $projects = array() ) {
 
 			$project_icons_urls = array();
 
 			foreach ( $projects as $project ) {
-				// TODO: Check which is unique: slug or path.
-				$project_icons_urls[ $project->path ] = self::get_project_icon_url( $project );
+				$project_icons_urls[ (string) $project->path ] = self::get_project_icon_url( $project );
 			}
 
 			return $project_icons_urls;

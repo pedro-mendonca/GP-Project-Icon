@@ -1,6 +1,8 @@
 parameters:
 	level: 9
 	inferPrivatePropertyTypeFromConstructor: true
+	WPCompat:
+		pluginFile: gp-project-icon.php
 	scanFiles:
 		# GlotPress Stubs
 		- %rootDir%/../../pedro-mendonca/glotpress-stubs/glotpress-stubs.php

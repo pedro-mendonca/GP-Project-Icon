@@ -62,3 +62,4 @@ Sure! You are welcome to report any issues or add feature suggestions on the [Gi
 *   Add project header icon to GlotPress Project page.
 *   Add sub-project icons to GlotPress Project page.
 *   Add media file select field to the Project edit/new form.
+*   Delete project icon meta when deleting a project.

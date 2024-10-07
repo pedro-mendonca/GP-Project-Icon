@@ -1,14 +1,15 @@
-Possibilidades:
+List of ideas:
 
-- [ ] Imagem (png, jpg, gif, svg)
-- [x] Imagem da galeria, com o media uploader do frontend.
-- [ ] Dashicon (dashicon-slug)
-- [-] Fontawesome (slug) ?
-- [?] Clonar meta ao clonar projecto.
+- [x] Gallery image select, using the media uploader on frontend
+- [x] Delete icon meta on deleting project
+- [ ] Set allowed image types (png, jpg, gif, svg)
+- [?] Clone icon meta on cloning project
 - [ ] Check behavior on viewing a project which image was deleted from media library
+- [ ] Dashicon (dashicon-slug)
+- [-] Fontawesome (slug)
+
+Resources:
 
 https://derekspringer.wordpress.com/2015/05/07/using-the-wordpress-media-loader-in-the-front-end/
-
-// https://gist.github.com/bcole808/b31ed5101b1723e77dce
-// https://jeroensormani.com/how-to-include-the-wordpress-media-selector-in-your-plugin/
-// https://rudrastyh.com/wordpress/how-to-add-images-to-media-library-from-uploaded-files-programmatically.html
+https://gist.github.com/bcole808/b31ed5101b1723e77dce
+https://jeroensormani.com/how-to-include-the-wordpress-media-selector-in-your-plugin/

@@ -17,7 +17,7 @@ Add icons to your GlotPress projects.
 [![Coding Standards](https://github.com/pedro-mendonca/GP-Project-Icon/actions/workflows/coding-standards.yml/badge.svg)](https://github.com/pedro-mendonca/GP-Project-Icon/actions/workflows/coding-standards.yml)
 [![Static Analysis](https://github.com/pedro-mendonca/GP-Project-Icon/actions/workflows/static-analysis.yml/badge.svg)](https://github.com/pedro-mendonca/GP-Project-Icon/actions/workflows/static-analysis.yml)
 [![WP Plugin Check](https://github.com/pedro-mendonca/GP-Project-Icon/actions/workflows/plugin-check.yml/badge.svg)](https://github.com/pedro-mendonca/GP-Project-Icon/actions/workflows/plugin-check.yml)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/3539ffa2702a4e1a9b7ac7fcfd506169)](https://app.codacy.com/gh/pedro-mendonca/GP-Project-Icon/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/4ac97db27f2245fcbed4a17fc6d333ea)](https://app.codacy.com/gh/pedro-mendonca/GP-Project-Icon/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
 ## Description
 
@@ -95,3 +95,4 @@ Sure! You are welcome to report any issues or add feature suggestions on the [Gi
 * Add project header icon to GlotPress Project page.
 * Add sub-project icons to GlotPress Project page.
 * Add media file select field to the Project edit/new form.
+* Delete project icon meta when deleting a project.

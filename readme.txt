@@ -3,7 +3,7 @@ Contributors: pedromendonca
 Donate link: https://github.com/sponsors/pedro-mendonca
 Tags: glotpress, translation, toolbox, project, icon
 Requires at least: 5.3
-Tested up to: 6.6
+Tested up to: 6.7
 Requires PHP: 7.4
 Requires Plugins: glotpress
 Stable tag: 1.0.0
@@ -56,7 +56,14 @@ Sure! You are welcome to report any issues or add feature suggestions on the [Gi
 
 == Changelog ==
 
+= Unreleased =
+
+*   Tested up to WP 6.7.
+*   Include minified assets maps.
+*   Add prefixes for supported browserslist.
+
 = 1.0.0 =
+
 *   Initial release.
 *   Add project icons to GlotPress Projects page.
 *   Add project header icon to GlotPress Project page.

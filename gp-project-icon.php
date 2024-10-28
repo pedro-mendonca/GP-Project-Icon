@@ -11,12 +11,10 @@
  * @wordpress-plugin
  * Plugin Name:       GP Project Icon
  * Plugin URI:        https://wordpress.org/plugins/gp-project-icon/
- * GitHub Plugin URI: https://github.com/pedro-mendonca/GP-Project-Icon
- * Primary Branch:    main
  * Description:       This GlotPress plugin allows you to add icons to your projects.
  * Version:           1.0.0
  * Requires at least: 5.3
- * Tested up to:      6.6
+ * Tested up to:      6.7
  * Requires PHP:      7.4
  * Requires Plugins:  glotpress
  * Author:            Pedro Mendonça

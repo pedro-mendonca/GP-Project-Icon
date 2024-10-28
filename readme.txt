@@ -61,6 +61,7 @@ Sure! You are welcome to report any issues or add feature suggestions on the [Gi
 *   Tested up to WP 6.7.
 *   Include minified assets maps.
 *   Add prefixes for supported browserslist.
+*   Remove plugin header for Git Updater, forbiden by the .org Plugin Team.
 
 = 1.0.0 =
 

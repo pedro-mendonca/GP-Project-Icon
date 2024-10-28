@@ -6,7 +6,7 @@ Requires at least: 5.3
 Tested up to: 6.7
 Requires PHP: 7.4
 Requires Plugins: glotpress
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -56,7 +56,7 @@ Sure! You are welcome to report any issues or add feature suggestions on the [Gi
 
 == Changelog ==
 
-= Unreleased =
+= 1.0.1 =
 
 *   Tested up to WP 6.7.
 *   Include minified assets maps.

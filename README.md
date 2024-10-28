@@ -88,7 +88,7 @@ Sure! You are welcome to report any issues or add feature suggestions on the [Gi
 
 ## Changelog
 
-### Unreleased
+### 1.0.1
 
 * Tested up to WP 6.7.
 * Include minified assets maps.

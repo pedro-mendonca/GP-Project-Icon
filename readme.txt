@@ -15,9 +15,13 @@ Add icons to your GlotPress projects.
 == Description ==
 
 This GlotPress plugin allows you to add icons to your projects.
+
 Up to GlotPress v4.0.1 the templates 'project.php' and 'projects.php' don't have the necessary hooks to easily add the icons on server side.
+
 For now the icons are added on the frontend with JavaScript.
+
 If the PR [Add action hooks and filters to Projects and Project templates](https://github.com/GlotPress/GlotPress/pull/1864) is merged, then the JS is no longer needed and the template customization will be done the right way.
+
 The plugin uses `gp_meta` with the meta key `project_icon` to store the ID of the media library attachment, for each object of type `project` with a corresponding ID.
 
 == Features ==

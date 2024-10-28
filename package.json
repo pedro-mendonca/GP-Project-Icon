@@ -24,20 +24,27 @@
 	"devDependencies": {
 		"@wordpress/scripts": "^30.1.0",
 		"postcss-cli": "^11.0.0",
+		"postcss-preset-env": "^10.0.7",
 		"sass": "^1.79.4",
 		"uglify-js": "^3.19.3"
 	},
 	"scripts": {
 		"build": "npm run build:js & npm run build:css",
-		"build:css": "npm run compile:css && npm run build:css:style",
-		"compile:css": "sass assets/css/ -c",
-		"build:css:style": "postcss assets/css/style.css > assets/css/style.min.css",
+		"build:css": "npm run compile:css && npm run lint:css:fix && npm run build:css:prefix && npm run build:css:minify",
+		"compile:css": "sass assets/css/ --color --no-source-map --verbose",
+		"build:css:prefix": "postcss assets/css/style.css --replace --verbose",
+		"build:css:minify": "postcss assets/css/style.css -o assets/css/style.min.css --map --use cssnano --verbose",
 		"build:js": "npm run build:js:projects & npm run build:js:project-edit",
-		"build:js:projects": "uglifyjs assets/js/projects.js --compress drop_console=true -o assets/js/projects.min.js",
-		"build:js:project-edit": "uglifyjs assets/js/project-edit.js --compress drop_console=true -o assets/js/project-edit.min.js",
-		"lint:css": "wp-scripts lint-style --fix",
+		"build:js:projects": "uglifyjs assets/js/projects.js -o assets/js/projects.min.js --compress drop_console=true --source-map base=assets/js,url=projects.min.js.map",
+		"build:js:project-edit": "uglifyjs assets/js/project-edit.js -o assets/js/project-edit.min.js --compress drop_console=true --source-map base=assets/js,url=project-edit.min.js.map",
+		"lint:css": "wp-scripts lint-style",
+		"lint:css:fix": "npm run lint:css -- --fix",
 		"lint:js": "wp-scripts lint-js",
+		"lint:js:fix": "npm run lint:js -- --fix",
 		"lint:md:docs": "wp-scripts lint-md-docs",
 		"lint:pkg-json": "wp-scripts lint-pkg-json"
-	}
+	},
+	"browserslist": [
+		"last 3 versions"
+	]
 }

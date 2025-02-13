@@ -24,7 +24,7 @@
 	"devDependencies": {
 		"@wordpress/scripts": "^30.6.0",
 		"postcss-cli": "^11.0.0",
-		"postcss-preset-env": "^10.1.1",
+		"postcss-preset-env": "^10.1.4",
 		"sass": "^1.81.0",
 		"uglify-js": "^3.19.3"
 	},

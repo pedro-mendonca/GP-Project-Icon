@@ -88,6 +88,10 @@ Sure! You are welcome to report any issues or add feature suggestions on the [Gi
 
 ## Changelog
 
+### Unreleased
+
+* Tested up to WP 6.8.
+
 ### 1.0.1
 
 * Tested up to WP 6.7.
